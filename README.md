@@ -1,2 +1,2 @@
-# ROSProjects
-ROS Projects including Serial Manipulator forward kinematics, reverse kinematics, Jacobians, and trajectory planning algorithm; Planning, localization, and mapping for wheel robots
+# TurtleBotProjects
+This are ROS projects about TurtleBot Burger, which include image recoginition using template matching and knn, object following, obstacle avoiding, and navigation
