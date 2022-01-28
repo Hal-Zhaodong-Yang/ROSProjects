@@ -1,0 +1,14 @@
+<launch>
+<include file="$(find turtlebot3_bringup)/launch/turtlebot3_robot.launch">
+</include>
+<include file="$(find raspicam_node)/launch/camerav2_410x308_10fps.launch">
+</include>
+<include file="$(find hls_lfcd_lds_driver)/launch/hlds_laser.launch">
+</include>
+<node pkg="team1_object_chaser" type="detect_object.py" name="detect_object">
+</node>
+<node pkg="team1_object_chaser" type="get_object_range.py" name="get_object_range">
+</node>
+<node pkg="team1_object_chaser" type="chase_object.py" name="chase_object">
+</node>
+</launch>
