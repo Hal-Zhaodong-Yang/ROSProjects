@@ -1,0 +1,10 @@
+<launch>
+<!--<include file="$(find turtlebot3_bringup)/launch/turtlebot3_robot.launch">
+</include>
+<include file="$(find raspicam_node)/launch/camerav2_410x308_10fps.launch">
+</include>-->
+<node pkg="team1_maze_runner" type="maze_runner_node.py" name="maze_runner_node">
+</node>
+<node pkg="team1_maze_runner" type="image_process.py" name="image_process">
+</node>
+</launch>
