@@ -1,0 +1,10 @@
+<launch>
+<include file="$(find turtlebot3_bringup)/launch/turtlebot3_robot.launch">
+</include>
+<include file="$(find raspicam_node)/launch/camerav2_410x308_10fps.launch">
+</include>
+<node pkg="team1_object_follower" type="detectObject.py" name="detectObject">
+</node>
+<node pkg="team1_object_follower" type="rotate_robot.py" name="rotate_robot">
+</node>
+</launch>
