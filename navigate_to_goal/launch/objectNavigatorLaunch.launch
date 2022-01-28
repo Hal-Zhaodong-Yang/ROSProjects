@@ -1,0 +1,6 @@
+<launch>
+<include file="$(find turtlebot3_bringup)/launch/turtlebot3_robot.launch">
+</include>
+<node pkg="team1_object_chaser" type="goToGoal.py" name="goToGoal">
+</node>
+</launch>
