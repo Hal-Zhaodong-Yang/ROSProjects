@@ -1,0 +1,85 @@
+#!/usr/bin/env python
+import sys
+import rospy
+import actionlib
+from geometry_msgs.msg import PoseStamped
+from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
+
+class waypoints:
+    def __init__(self):
+        self.mode = 0
+        newPoseStamped1 = PoseStamped()
+        newPoseStamped1.header.frame_id = "map"
+        newPoseStamped1.pose.position.x = 0.345
+        newPoseStamped1.pose.position.y = -0.56
+        newPoseStamped1.pose.position.z = 0.000
+        newPoseStamped1.pose.orientation.x = 0.000
+        newPoseStamped1.pose.orientation.y = 0.000
+        newPoseStamped1.pose.orientation.z = 0.0
+        newPoseStamped1.pose.orientation.w = 1.0
+
+        newPoseStamped2 = PoseStamped()
+        newPoseStamped2.header.frame_id = "map"
+        newPoseStamped2.pose.position.x = 3.355
+        newPoseStamped2.pose.position.y = -0.6
+        newPoseStamped2.pose.position.z = 0.000
+        newPoseStamped2.pose.orientation.x = 0.000
+        newPoseStamped2.pose.orientation.y = 0.000
+        newPoseStamped2.pose.orientation.z = 0.9999
+        newPoseStamped2.pose.orientation.w = 0.008
+
+        newPoseStamped3 = PoseStamped()
+        newPoseStamped3.header.frame_id = "map"
+        newPoseStamped3.pose.position.x = 0.345
+        newPoseStamped3.pose.position.y = -0.56
+        newPoseStamped3.pose.position.z = 0.000
+        newPoseStamped3.pose.orientation.x = 0.000
+        newPoseStamped3.pose.orientation.y = 0.000
+        newPoseStamped3.pose.orientation.z = 0.0
+        newPoseStamped3.pose.orientation.w = 1.0
+
+        self.poses = [newPoseStamped1, newPoseStamped2, newPoseStamped3]
+
+    def movebase_client(self):
+
+        client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
+        client.wait_for_server()
+
+        goal = MoveBaseGoal()
+        goal.target_pose = self.poses[self.mode]
+
+        client.send_goal(goal)
+        wait = client.wait_for_result()
+        if not wait:
+            rospy.logerr("Action server not available!")
+            rospy.signal_shutdown("Action server not available!")
+        else:
+            return client.get_result()
+
+    def incrementMode(self):
+        self.mode += 1
+        rospy.loginfo("Mode update: ")
+        rospy.loginfo(self.mode)
+
+    def pause(self):
+        rospy.loginfo(self.mode)
+        rospy.sleep(2)
+        while self.mode > 2:
+            rospy.sleep(10)
+
+def main(args):
+    ic = waypoints()
+    flag = 0
+    rospy.init_node('waypoints', anonymous=True)
+    if not flag:
+        flag = 1
+    for i in range(0, 3):
+        result = ic.movebase_client()
+        if result:
+            rospy.loginfo("Sucess! Pausing...")
+            ic.pause()
+            ic.incrementMode()
+    rospy.spin()
+
+if __name__ == '__main__':
+    main(sys.argv)
